@@ -86,7 +86,7 @@ const Navbar = () => {
             isActive ? "nav-link active-link" : "nav-link"
           }
         >
-          Cart {cartLength}
+          Cart
         </NavLink>
 
         {isAuthenticated ? (

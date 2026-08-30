@@ -1,0 +1,97 @@
+.navbar {
+  width: 100%;
+  min-height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 50px;
+
+  background-color: #ffffff;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  box-sizing: border-box;
+}
+
+.navbar-logo {
+  font-size: 24px;
+  font-weight: 700;
+
+  color: #111827;
+
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link {
+  color: #4b5563;
+
+  text-decoration: none;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #111827;
+}
+
+.active-link {
+  color: #111827;
+
+  font-weight: 700;
+}
+
+.logout-button {
+  border: none;
+
+  padding: 9px 18px;
+
+  border-radius: 6px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  background-color: #ef4444;
+
+  color: white;
+}
+.logout-toast-buttons {
+display: flex;
+gap: 10px;
+margin-top: 10px;
+}
+
+.confirm-logout-button,
+.cancel-logout-button {
+border: none;
+padding: 8px 12px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.confirm-logout-button {
+background-color: #dc3545;
+color: white;
+}
+
+.cancel-logout-button {
+background-color: #6c757d;
+color: white;
+}
+
+
+.logout-button:hover {
+  background-color: #dc2626;
+}

@@ -1,0 +1,230 @@
+.sell-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+
+  background: #f5f6f8;
+}
+
+.sell-container {
+  width: 100%;
+  max-width: 750px;
+
+  margin: 0 auto;
+  padding: 40px;
+
+  background: white;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.sell-header {
+  margin-bottom: 30px;
+}
+
+.sell-header h1 {
+  margin: 0 0 8px;
+
+  color: #111827;
+
+  font-size: 32px;
+}
+
+.sell-header p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.sell-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 7px;
+
+  color: #374151;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+
+  outline: none;
+
+  background: white;
+
+  color: #111827;
+
+  font-family: inherit;
+  font-size: 15px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group input {
+  height: 46px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #111827;
+
+  box-shadow:
+    0 0 0 3px rgba(17, 24, 39, 0.08);
+}
+
+.field-error {
+  margin-top: 5px;
+
+  color: #dc2626;
+
+  font-size: 12px;
+}
+
+.form-error {
+  padding: 12px 14px;
+
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+}
+
+.sell-button {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #111827;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.sell-button:hover {
+  background: #1f2937;
+}
+
+.sell-button:active {
+  transform: scale(0.99);
+}
+
+.sell-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+.file-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.file-input {
+  cursor: pointer;
+  padding: 10px 14px;
+}
+
+.file-input::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #f3f4f6;
+  color: #374151;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.file-input::file-selector-button:hover {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.image-preview-container {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  background-color: #fafafa;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.preview-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+
+@media (max-width: 600px) {
+  .sell-page {
+    padding: 25px 15px;
+  }
+
+  .sell-container {
+    padding: 25px 20px;
+  }
+
+  .sell-header h1 {
+    font-size: 28px;
+  }
+}

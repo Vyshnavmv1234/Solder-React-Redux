@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { addToCart } from "../features/cart/cartSlice";
 import { fetchProducts } from "../features/product/productSlice";
 import { toast } from "react-toastify";
@@ -8,18 +9,30 @@ import "../public/ProductList.css";
 
 const ProductList = () => {
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { products, loading, error } = useSelector((state) => state.products);
 
   const [filters, setFilters] = useState({
-    category: "",
-    minPrice: "",
-    maxPrice: "",
+    category: searchParams.get("category") || "",
+    minPrice: searchParams.get("minPrice") || "",
+    maxPrice: searchParams.get("maxPrice") || "",
   });
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    const currentCategory = searchParams.get("category") || "";
+    const currentMinPrice = searchParams.get("minPrice") || "";
+    const currentMaxPrice = searchParams.get("maxPrice") || "";
+
+    const urlFilters = {
+      category: currentCategory,
+      minPrice: currentMinPrice,
+      maxPrice: currentMaxPrice,
+    };
+
+    setFilters(urlFilters);
+    dispatch(fetchProducts(urlFilters));
+  }, [searchParams, dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,8 +44,14 @@ const ProductList = () => {
   };
 
   const handleApplyFilters = () => {
-    dispatch(fetchProducts(filters));
+    const params = {};
+    if (filters.category) params.category = filters.category;
+    if (filters.minPrice) params.minPrice = filters.minPrice;
+    if (filters.maxPrice) params.maxPrice = filters.maxPrice;
+
+    setSearchParams(params);
   };
+
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
 
@@ -40,15 +59,13 @@ const ProductList = () => {
   };
 
   const handleResetFilters = () => {
-    const emptyFilters = {
+    setFilters({
       category: "",
       minPrice: "",
       maxPrice: "",
-    };
+    });
 
-    setFilters(emptyFilters);
-
-    dispatch(fetchProducts(emptyFilters));
+    setSearchParams({});
   };
 
   return (

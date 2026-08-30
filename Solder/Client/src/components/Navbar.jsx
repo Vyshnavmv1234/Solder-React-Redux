@@ -48,7 +48,7 @@ const Navbar = () => {
     <nav className="navbar">
       {/* App Name */}
       <NavLink to="/products" className="navbar-logo">
-        Solder
+        Solder 
       </NavLink>
 
       {/* Navigation Links */}

@@ -71,6 +71,12 @@
   cursor: pointer;
 }
 
+.quantity-controls button:disabled {
+  opacity: 0.4;
+
+  cursor: not-allowed;
+}
+
 .remove-button {
   border: none;
 

@@ -12,6 +12,7 @@ const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { products, loading, error } = useSelector((state) => state.products);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
@@ -53,6 +54,23 @@ const ProductList = () => {
   };
 
   const handleAddToCart = (product) => {
+    const stock = product.stock ?? product.quantity;
+    const existingInCart = cartItems.find((item) => item._id === product._id);
+
+    if (stock !== undefined && stock <= 0) {
+      toast.error("This product is out of stock!");
+      return;
+    }
+
+    if (
+      existingInCart &&
+      stock !== undefined &&
+      existingInCart.quantity >= (existingInCart.stock ?? stock)
+    ) {
+      toast.warning(`Cannot add more. Only ${stock} items available in stock!`);
+      return;
+    }
+
     dispatch(addToCart(product));
 
     toast.success(`${product.title} added to cart!`);

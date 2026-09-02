@@ -1,45 +1,33 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 import {
   increaseQuantity,
   decreaseQuantity,
   removeFromCart,
-  clearCart,
 } from "../features/cart/cartSlice";
-import { toast } from "react-toastify";
-
-import { checkoutProducts } from "../features/checkout/checkoutSlice";
 
 import "../public/Cart.css";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { cartItems } = useSelector((state) => state.cart);
   const { isAuthenticated } = useSelector((state) => state.auth);
 
-  if (!isAuthenticated) navigate("/login");
-
-  const { loading: checkoutLoading, error: checkoutError } = useSelector(
-    (state) => state.checkout,
-  );
+  // Redirect unauthenticated users
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
   const totalAmount = cartItems.reduce((total, item) => {
     return total + item.quantity * item.price;
   }, 0);
 
-  const handleCheckout = async () => {
-    const productIds = cartItems.map((item) => item._id);
-
-    const result = await dispatch(checkoutProducts(productIds));
-
-    if (checkoutProducts.fulfilled.match(result)) {
-      toast.success("Order Proceeded to Checkout")
-      dispatch(clearCart());
-    }
-  };
+  const totalQuantity = cartItems.reduce((total, item) => {
+    return total + item.quantity;
+  }, 0);
 
   if (cartItems.length === 0) {
     return (
@@ -47,6 +35,13 @@ const Cart = () => {
         <h1>Your Cart</h1>
 
         <p>Your cart is empty.</p>
+
+        <button
+          className="checkout-button"
+          onClick={() => navigate("/products")}
+        >
+          Continue Shopping
+        </button>
       </div>
     );
   }
@@ -72,13 +67,28 @@ const Cart = () => {
               </div>
 
               <div className="quantity-controls">
-                <button onClick={() => dispatch(decreaseQuantity(item._id))}>
+                <button
+                  onClick={() => dispatch(decreaseQuantity(item._id))}
+                  disabled={item.quantity <= 1}
+                >
                   -
                 </button>
 
                 <span>{item.quantity}</span>
 
-                <button onClick={() => dispatch(increaseQuantity(item._id))}>
+                <button
+                  onClick={() => dispatch(increaseQuantity(item._id))}
+                  disabled={
+                    item.stock !== undefined &&
+                    item.quantity >= item.stock
+                  }
+                  title={
+                    item.stock !== undefined &&
+                    item.quantity >= item.stock
+                      ? "Maximum stock limit reached"
+                      : ""
+                  }
+                >
                   +
                 </button>
               </div>
@@ -96,18 +106,17 @@ const Cart = () => {
         <div className="cart-summary">
           <h2>Order Summary</h2>
 
-          <p>Total Items: {cartItems.length}</p>
+          <p>Total Products: {cartItems.length}</p>
+
+          <p>Total Quantity: {totalQuantity}</p>
 
           <h3>Total: ₹{totalAmount}</h3>
 
-          {checkoutError && <p className="checkout-error">{checkoutError}</p>}
-
           <button
             className="checkout-button"
-            onClick={handleCheckout}
-            disabled={checkoutLoading}
+            onClick={() => navigate("/checkout")}
           >
-            {checkoutLoading ? "Processing..." : "Proceed to Checkout"}
+            Proceed to Checkout
           </button>
         </div>
       </div>

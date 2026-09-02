@@ -20,13 +20,23 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const product = action.payload;
+      const stock = product.stock ?? product.quantity;
 
       const exists = state.cartItems.find((item) => item._id === product._id);
 
       if (exists) {
-        exists.quantity += 1;
+        const currentStock = exists.stock ?? stock ?? Infinity;
+        if (exists.quantity < currentStock) {
+          exists.quantity += 1;
+        }
       } else {
-        state.cartItems.push({ ...product, quantity: 1 });
+        if (stock === undefined || stock > 0) {
+          state.cartItems.push({
+            ...product,
+            stock: stock,
+            quantity: 1,
+          });
+        }
       }
       setCartToLocalStorage(state.cartItems);
     },
@@ -44,7 +54,10 @@ const cartSlice = createSlice({
       const item = state.cartItems.find((item) => item._id === productId);
 
       if (item) {
-        item.quantity += 1;
+        const maxStock = item.stock ?? Infinity;
+        if (item.quantity < maxStock) {
+          item.quantity += 1;
+        }
       }
       setCartToLocalStorage(state.cartItems);
     },

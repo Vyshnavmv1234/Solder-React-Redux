@@ -48,6 +48,7 @@ const SellProduct = () => {
       formData.append("title", data.title);
       formData.append("description", data.description);
       formData.append("price", data.price);
+      formData.append("quantity", data.stock);
       formData.append("category", data.category);
 
       if (data.image && data.image[0]) {
@@ -123,6 +124,24 @@ const SellProduct = () => {
                 valueAsNumber: true,
                 validate: (value) =>
                   value > 0 || "Price must be greater than 0",
+              })}
+            />
+            {errors.price && (
+              <span className="field-error">{errors.price.message}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="stock">Stock</label>
+            <input
+              id="stock"
+              type="number"
+              step="0.01"
+              placeholder="Enter quantity"
+              {...register("stock", {
+                required: "Quantity is required",
+                valueAsNumber: true,
+                validate: (value) =>
+                  value > 0 || "Quantity must be greater than 0",
               })}
             />
             {errors.price && (

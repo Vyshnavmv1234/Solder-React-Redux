@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import MyProducts from "./components/myProducts";
 import Cart from "./components/cart";
 import { ToastContainer } from "react-toastify";
+import Checkout from "./components/checkout";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/products" element={<ProductList />}></Route>
         <Route path="/myProducts" element={<MyProducts />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/checkout" element={<Checkout></Checkout>} ></Route>
       </Routes>
     </>
   );

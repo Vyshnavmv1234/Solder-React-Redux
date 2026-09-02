@@ -45,8 +45,7 @@ const productSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      default:1,
-      required: false,
+      required: true,
     },
     contactNumber: {
       type: Number,

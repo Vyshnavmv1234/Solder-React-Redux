@@ -1,24 +1,26 @@
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { loginUser } from "../features/auth/authSlice";
-import '../public/Login.css'
+import "../public/Login.css";
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const  {isAuthenticated}=useSelector((state)=>state.auth)
+  const { isAuthenticated } = useSelector((state) => state.auth);
 
   const { loading, error } = useSelector((state) => state.auth);
 
-  if(isAuthenticated) navigate('/products')
+  if (isAuthenticated) navigate("/products");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); 
+  } = useForm();
 
   const onSubmit = async (data) => {
     try {
@@ -90,18 +92,29 @@ const Login = () => {
                 </button>
               </div>
 
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                })}
-              />
+              <div className="password-input-wrapper">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                  })}
+                />
+
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  aria-label="Toggle password visibility"
+                >
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
 
               {errors.password && (
                 <span className="field-error">{errors.password.message}</span>

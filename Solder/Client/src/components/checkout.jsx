@@ -12,21 +12,16 @@ const Checkout = () => {
 
   const { cartItems } = useSelector((state) => state.cart);
 
-  const { loading, success, error } = useSelector(
-    (state) => state.checkout,
-  );
+  const { loading, success, error } = useSelector((state) => state.checkout);
 
-  // Calculate total amount
   const totalAmount = cartItems.reduce((total, item) => {
     return total + item.price * item.quantity;
   }, 0);
 
-  // Calculate total quantity
   const totalQuantity = cartItems.reduce((total, item) => {
     return total + item.quantity;
   }, 0);
 
-  // If cart is empty and checkout was not successful
   if (cartItems.length === 0 && !success) {
     return <Navigate to="/cart" replace />;
   }
@@ -35,9 +30,7 @@ const Checkout = () => {
     const productIds = cartItems.map((item) => item._id);
 
     try {
-      const result = await dispatch(
-        checkoutProducts(productIds),
-      );
+      const result = await dispatch(checkoutProducts(productIds));
 
       if (checkoutProducts.fulfilled.match(result)) {
         dispatch(clearCart());
@@ -47,7 +40,6 @@ const Checkout = () => {
     }
   };
 
-  // Successful checkout screen
   if (success) {
     return (
       <div className="checkout-page">
@@ -56,9 +48,7 @@ const Checkout = () => {
 
           <h1>Order Successful!</h1>
 
-          <p>
-            Your products have been successfully purchased.
-          </p>
+          <p>Your products have been successfully purchased.</p>
 
           <button
             onClick={() => navigate("/products")}
@@ -74,24 +64,19 @@ const Checkout = () => {
   return (
     <div className="checkout-page">
       <div className="checkout-container">
-
         <div className="checkout-header">
           <h1>Checkout</h1>
           <p>Review your order before confirming your purchase.</p>
         </div>
 
         <div className="checkout-layout">
-
           {/* Order Items */}
 
           <div className="checkout-items">
             <h2>Order Items</h2>
 
             {cartItems.map((item) => (
-              <div
-                className="checkout-item"
-                key={item._id}
-              >
+              <div className="checkout-item" key={item._id}>
                 <img
                   src={item.imageUrl}
                   alt={item.title}
@@ -121,17 +106,13 @@ const Checkout = () => {
             <div className="summary-row">
               <span>Products</span>
 
-              <span>
-                {cartItems.length}
-              </span>
+              <span>{cartItems.length}</span>
             </div>
 
             <div className="summary-row">
               <span>Total Quantity</span>
 
-              <span>
-                {totalQuantity}
-              </span>
+              <span>{totalQuantity}</span>
             </div>
 
             <div className="summary-divider"></div>
@@ -139,25 +120,17 @@ const Checkout = () => {
             <div className="summary-total">
               <span>Total Amount</span>
 
-              <strong>
-                ₹{totalAmount}
-              </strong>
+              <strong>₹{totalAmount}</strong>
             </div>
 
-            {error && (
-              <div className="checkout-error">
-                {error}
-              </div>
-            )}
+            {error && <div className="checkout-error">{error}</div>}
 
             <button
               className="confirm-checkout-button"
               onClick={handleCheckout}
               disabled={loading}
             >
-              {loading
-                ? "Processing..."
-                : "Confirm Checkout"}
+              {loading ? "Processing..." : "Confirm Checkout"}
             </button>
 
             <button
@@ -167,7 +140,6 @@ const Checkout = () => {
             >
               Back to Cart
             </button>
-
           </div>
         </div>
       </div>
